@@ -1,0 +1,274 @@
+@import "tailwindcss";
+
+@theme {
+  --color-dark-900: #0B0C10;
+  --color-dark-800: #1F2833;
+  --color-primary-light: #66FCF1;
+  --color-primary: #45A29E;
+
+  --color-text-main: var(--text-main);
+  --color-text-muted: var(--text-muted);
+  
+  --color-calm-blue: #2B4162;
+  --color-calm-purple: #382B62;
+  --color-calm-teal: #2B625C;
+
+  --animate-breathe: breathe 8s ease-in-out infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-fade-in: fadeIn 0.5s ease-out;
+
+  @keyframes breathe {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.5); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  @keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+}
+
+:root {
+  --app-bg: linear-gradient(135deg, #0f0c29, #1e1245, #380a3b);
+  --app-bg-fixed: #0f0c29;
+  --text-main: #ffffff;
+  --text-muted: rgba(255, 255, 255, 0.6);
+  --panel-bg: rgba(255, 255, 255, 0.05);
+  --panel-border: rgba(255, 255, 255, 0.1);
+  --sidebar-bg: rgba(0, 0, 0, 0.2);
+  --glass-blur: blur(20px);
+}
+
+[data-theme="dark"] {
+  --app-bg: #000000;
+  --app-bg-fixed: #000000;
+  --text-main: #ffffff;
+  --text-muted: rgba(255, 255, 255, 0.5);
+  --panel-bg: #0B0B0F;
+  --panel-border: rgba(255, 255, 255, 0.08);
+  --sidebar-bg: #0B0B0F;
+  --glass-blur: blur(0px);
+}
+
+[data-theme="light"] {
+  --app-bg: #F5F5F5;
+  --app-bg-fixed: #F5F5F5;
+  --text-main: #000000;
+  --text-muted: #4b5563;
+  --panel-bg: #FFFFFF;
+  --panel-border: rgba(0, 0, 0, 0.08);
+  --sidebar-bg: #FFFFFF;
+  --glass-blur: blur(0px);
+}
+
+@layer base {
+  body {
+    background: var(--app-bg);
+    background-attachment: fixed;
+    color: var(--text-main);
+    @apply min-h-screen font-sans transition-colors duration-300;
+  }
+}
+
+.glass-panel {
+  background: var(--panel-bg);
+  backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--panel-border);
+  @apply rounded-2xl shadow-xl transition-all duration-300;
+}
+
+/* Custom scrollbar for chat */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+@keyframes neon-flow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 300% 50%; }
+}
+
+.neon-btn {
+  position: relative;
+  z-index: 1;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.neon-btn::before {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  background: linear-gradient(90deg, #ff00cc, #3333ff, #00ffee, #ff00cc);
+  background-size: 300% 100%;
+  animation: neon-flow 3s linear infinite;
+  border-radius: inherit;
+  z-index: -2;
+  opacity: 0;
+  transition: opacity 0.4s ease, filter 0.4s ease;
+  pointer-events: none;
+}
+
+.neon-btn:hover::before {
+  opacity: 0.4;
+  filter: blur(8px);
+}
+
+.neon-btn::after {
+  content: '';
+  position: absolute;
+  inset: -1.5px;
+  background: linear-gradient(90deg, #ff00cc, #3333ff, #00ffee, #ff00cc);
+  background-size: 300% 100%;
+  animation: neon-flow 3s linear infinite;
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.neon-btn:hover::after {
+  opacity: 0.5;
+}
+
+.neon-btn-always {
+  position: relative;
+  z-index: 1;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.neon-btn-always::before {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  background: linear-gradient(90deg, #ff00cc, #3333ff, #00ffee, #ff00cc);
+  background-size: 300% 100%;
+  animation: neon-flow 4s linear infinite;
+  border-radius: inherit;
+  z-index: -2;
+  opacity: 0.4;
+  filter: blur(5px);
+  transition: all 0.4s ease;
+  pointer-events: none;
+}
+
+.neon-btn-always:hover::before {
+  opacity: 0.6;
+  filter: blur(10px);
+  animation-duration: 2s;
+}
+
+.neon-btn-always::after {
+  content: '';
+  position: absolute;
+  inset: -1.5px;
+  background: linear-gradient(90deg, #ff00cc, #3333ff, #00ffee, #ff00cc);
+  background-size: 300% 100%;
+  animation: neon-flow 4s linear infinite;
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0.6;
+  transition: all 0.4s ease;
+  pointer-events: none;
+}
+
+.neon-btn-always:hover::after {
+  opacity: 0.7;
+  animation-duration: 2s;
+}
+
+
+@keyframes sweep {
+  0% { transform: translateX(-150%) skewX(-25deg); }
+  100% { transform: translateX(150%) skewX(-25deg); }
+}
+
+.sweep-container {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.sweep-light {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(255, 255, 255, 0) 30%,
+    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0) 70%,
+    transparent 100%
+  );
+  transform: translateX(-150%) skewX(-25deg);
+  animation: sweep 4s infinite linear;
+  filter: blur(8px);
+}
+
+.group:hover .sweep-light {
+  animation-duration: 2.5s;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(255, 255, 255, 0) 30%,
+    rgba(255, 255, 255, 0.4) 50%,
+    rgba(255, 255, 255, 0) 70%,
+    transparent 100%
+  );
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Chatbox animated border glow */
+.chatbox-border {
+  position: relative;
+}
+
+.chatbox-border::before {
+  content: "";
+  position: absolute;
+  inset: -1.5px; /* Thin border */
+  border-radius: inherit;
+  padding: 1.5px;
+  background: linear-gradient(120deg, #ff00cc, #3333ff, #00ffee, #ff00cc);
+  background-size: 300% 300%;
+  animation: borderMove 8s linear infinite; /* Calm speed */
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.3; /* Subtle brightness */
+  pointer-events: none;
+  z-index: 50;
+}
+
+@keyframes borderMove {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 300% 50%; }
+}
+
