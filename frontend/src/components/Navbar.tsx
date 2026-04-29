@@ -1,10 +1,10 @@
-import { BellIcon } from '@heroicons/react/24/outline';
+
 
 export default function Navbar({ language, setLanguage, userEmail }: { language: string, setLanguage: (l: string) => void, userEmail: string }) {
   return (
     <header className="h-16 bg-transparent flex items-center justify-end px-8 sticky top-0 z-10 ml-20">
       <div className="flex items-center gap-6">
-        <select 
+        <select
           value={language}
           onChange={(e) => setLanguage(e.target.value)}
           className="bg-white/5 border border-white/10 rounded-full px-3 py-1 text-[12px] outline-none text-text-muted hover:bg-white/10 transition"
