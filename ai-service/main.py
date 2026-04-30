@@ -1,23 +1,24 @@
 import os
 import json
+import re
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import List, Dict, Optional
 from langchain_groq import ChatGroq
 from langchain_core.prompts import ChatPromptTemplate
-from langchain_core.output_parsers import JsonOutputParser
 from dotenv import load_dotenv
 
 # Load environment variables
 load_dotenv()
 
-app = FastAPI(title="Sahaay Groq-Only AI Service")
+app = FastAPI(title="Sahaay Groq AI Service")
 
-# Initialize Groq (Simplified)
+# Initialize Groq
 def get_llm():
     groq_key = os.getenv("GROQ_API_KEY")
     if groq_key and not groq_key.startswith("your_"):
-        return ChatGroq(model="llama3-8b-8192", temperature=0.2, groq_api_key=groq_key)
+        # Switched to llama-3.1-8b-instant as llama3-8b-8192 is decommissioned
+        return ChatGroq(model="llama-3.1-8b-instant", temperature=0.2, groq_api_key=groq_key)
     return None
 
 # --- Models ---
@@ -37,29 +38,21 @@ class SummaryRequest(BaseModel):
 class SummaryResponse(BaseModel):
     summary: str
 
-# --- Prompt Templates ---
-# We use double curly braces {{ }} to escape them for LangChain
-system_instructions = """You are Sahaay, a supportive AI for caregivers. 
-    Analyze the user's emotion and provide a supportive reply.
-    Return ONLY JSON in this format:
-    {{
-        "emotion": "sad | anxious | angry | happy | distressed",
-        "confidence": 0.9,
-        "risk": "LOW",
-        "reply": "your empathetic reply here",
-        "suggestions": ["suggestion 1", "suggestion 2"]
-    }}
-"""
-
-master_prompt = ChatPromptTemplate.from_messages([
-    ("system", system_instructions),
-    ("user", "{message}")
-])
+# --- Helper for robust JSON parsing ---
+def parse_json_safely(text: str) -> Dict:
+    try:
+        # Try finding JSON block if AI adds conversational filler
+        match = re.search(r'\{.*\}', text, re.DOTALL)
+        if match:
+            return json.loads(match.group())
+        return json.loads(text)
+    except Exception:
+        return {}
 
 # --- Endpoints ---
 @app.get("/")
 async def root():
-    return {"status": "Sahaay AI is Online", "port": 8080}
+    return {"status": "Sahaay AI is Online", "model": "llama-3.1-8b-instant"}
 
 @app.post("/chat", response_model=ChatResponse)
 async def chat_endpoint(request: ChatRequest):
@@ -67,20 +60,37 @@ async def chat_endpoint(request: ChatRequest):
     if not llm:
         return ChatResponse(
             emotion="neutral", confidence=0.0, risk="LOW",
-            reply="I'm here, but I need my API key to think. Please check the Groq key! 💙",
+            reply="Please check the Groq API key! 💙",
             suggestions=["Check API Key"]
         )
 
     try:
-        # Use simple string interpolation for the prompt
-        chain = master_prompt | llm | JsonOutputParser()
-        result = chain.invoke({"message": request.message})
-        return ChatResponse(**result)
+        # Use a simpler prompt style to avoid variable interpolation issues
+        system_prompt = "You are Sahaay, a supportive AI for caregivers. Return ONLY JSON: {\"emotion\": \"...\", \"confidence\": 0.9, \"risk\": \"LOW\", \"reply\": \"...\", \"suggestions\": [\"...\"]}"
+        
+        prompt = ChatPromptTemplate.from_messages([
+            ("system", system_prompt),
+            ("user", "{message}")
+        ])
+        
+        chain = prompt | llm
+        response = chain.invoke({"message": request.message})
+        
+        # Parse content manually for maximum reliability
+        result = parse_json_safely(response.content)
+        
+        return ChatResponse(
+            emotion=result.get("emotion", "neutral"),
+            confidence=result.get("confidence", 0.9),
+            risk=result.get("risk", "LOW"),
+            reply=result.get("reply", "I'm here for you. How can I help?"),
+            suggestions=result.get("suggestions", ["Take a breath"])
+        )
     except Exception as e:
         print(f"Chat Error: {e}")
         return ChatResponse(
             emotion="neutral", confidence=0.0, risk="LOW",
-            reply="I'm having a little trouble with my brain (Groq). Let's try again in a second!",
+            reply="I'm having a little trouble with my brain today. Let's try again!",
             suggestions=["Retry"]
         )
 
@@ -91,10 +101,12 @@ async def summarize_endpoint(request: SummaryRequest):
         return SummaryResponse(summary="I'm here for you.")
     try:
         prompt = ChatPromptTemplate.from_messages([
-            ("system", "Summarize these emotions in one warm sentence: {emotions}. Return JSON {{\"summary\": \"...\"}}")
+            ("system", "Summarize these emotions in one warm sentence. Return JSON {\"summary\": \"...\"}"),
+            ("user", "{emotions}")
         ])
-        chain = prompt | llm | JsonOutputParser()
-        result = chain.invoke({"emotions": ", ".join(request.emotions)})
+        chain = prompt | llm
+        response = chain.invoke({"emotions": ", ".join(request.emotions)})
+        result = parse_json_safely(response.content)
         return SummaryResponse(summary=result.get("summary", "You've been navigating a lot lately."))
     except Exception as e:
         print(f"Summary Error: {e}")
@@ -106,5 +118,4 @@ async def health():
 
 if __name__ == "__main__":
     import uvicorn
-    # Port 8080 for Railway
     uvicorn.run(app, host="0.0.0.0", port=8080)
