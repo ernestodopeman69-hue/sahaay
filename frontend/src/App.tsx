@@ -11,6 +11,7 @@ import FloatingCompanion from './components/FloatingCompanion';
 import CommunityChat from './components/CommunityChat';
 import AdminPanel from './components/AdminPanel';
 import { supabase } from './supabaseClient';
+import axios from 'axios';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('home');
@@ -18,6 +19,18 @@ export default function App() {
   const [session, setSession] = useState<any>(null);
 
   useEffect(() => {
+    // Initial Production Connection Test
+    const testConnection = async () => {
+      console.log("🚀 Sahaay App Load: Initializing connection test...");
+      try {
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/health`);
+        console.log("🌐 API Connection Status:", res.status === 200 ? "Online" : "Check Backend", res.data);
+      } catch (err) {
+        console.warn("⚠️ API Connection Failed. Is VITE_API_URL set in production?", err);
+      }
+    };
+    testConnection();
+
     // Check for real session
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session) {
