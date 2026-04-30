@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { XMarkIcon, SpeakerWaveIcon, SpeakerXMarkIcon, PlayIcon } from '@heroicons/react/24/outline';
 import { supabase } from '../supabaseClient';
 import axios from 'axios';
+import { API_URL } from '../config/api';
 
 interface VideoSectionProps {
   title: string;
@@ -34,7 +35,7 @@ export default function VideoSection({ title, videos, onClose }: VideoSectionPro
       if (durationMins > 0.01) { // Only track if > 0.6s for demo
         try {
           const { data: { user } } = await supabase.auth.getUser();
-          await axios.post(`${import.meta.env.VITE_API_URL}/api/activity`, {
+          await axios.post(`${API_URL}/api/activity`, {
             userId: user?.id || 'guest',
             type: 'calm',
             duration: durationMins

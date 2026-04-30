@@ -5,6 +5,7 @@ import { SparklesIcon, SpeakerWaveIcon, PauseIcon } from '@heroicons/react/24/ou
 import { motion, AnimatePresence } from 'framer-motion';
 import { supabase } from '../supabaseClient';
 import SplineScene from './SplineScene';
+import { API_URL } from '../config/api';
 
 
 type Message = {
@@ -323,7 +324,7 @@ export default function ChatInterface({ language, onNavigate }: { language: stri
 
     try {
       const { data: { user } } = await supabase.auth.getUser();
-      const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/api/chat`, {
+      const { data } = await axios.post(`${API_URL}/api/chat`, {
         message: userMsg.text,
         language,
         userId: user?.id || 'guest',

@@ -7,6 +7,7 @@ import ZenFlow from './games/ZenFlow';
 import MiniPuzzle from './games/MiniPuzzle';
 import axios from 'axios';
 import { supabase } from '../supabaseClient';
+import { API_URL } from '../config/api';
 
 const gamesList = [
   { id: 'breathing', title: 'Breathing Flow', desc: 'Regulate your heart rate with guided rhythmic breathing.', icon: CloudIcon, component: BreathingFlow, color: 'from-blue-600/20 to-blue-400/5', shadow: 'hover:shadow-blue-500/10' },
@@ -24,7 +25,7 @@ export default function Games() {
     const fetchEmotion = async () => {
       try {
         const { data: { user } } = await supabase.auth.getUser();
-        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/insights?userId=${user?.id || 'guest'}`);
+        const res = await axios.get(`${API_URL}/api/insights?userId=${user?.id || 'guest'}`);
         const lastEmotion = res.data.trends?.[0]?.emotion || 'neutral';
         
         if (lastEmotion === 'distressed' || lastEmotion === 'sad') setSuggestion('breathing');

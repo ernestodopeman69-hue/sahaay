@@ -13,6 +13,7 @@ import {
 } from '@heroicons/react/24/outline';
 import { supabase } from '../supabaseClient';
 import axios from 'axios';
+import { API_URL } from '../config/api';
 
 interface Task {
   id: string;
@@ -82,7 +83,7 @@ export default function CareCompanion({ onNavigate, language = 'English' }: { on
     // Track in DB
     try {
       const { data: { user } } = await supabase.auth.getUser();
-      await axios.post(`${import.meta.env.VITE_API_URL}/api/tasks`, {
+      await axios.post(`${API_URL}/api/tasks`, {
         userId: user?.id || 'guest',
         taskId: id,
         completed: true
@@ -100,7 +101,7 @@ export default function CareCompanion({ onNavigate, language = 'English' }: { on
     // Track in DB
     try {
       const { data: { user } } = await supabase.auth.getUser();
-      await axios.post(`${import.meta.env.VITE_API_URL}/api/tasks`, {
+      await axios.post(`${API_URL}/api/tasks`, {
         userId: user?.id || 'guest',
         taskId: id,
         completed: false

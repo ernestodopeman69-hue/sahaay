@@ -7,6 +7,7 @@ import {
 } from '@heroicons/react/24/outline';
 import CareCompanion from './CareCompanion';
 import axios from 'axios';
+import { API_URL } from '../config/api';
 
 
 const translations: Record<string, Record<string, string>> = {
@@ -95,7 +96,7 @@ export default function Dashboard({ onNavigate, language = 'English' }: { onNavi
         const userId = user?.id || 'guest';
 
         // Fetch Trends
-        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/insights?userId=${userId}`);
+        const res = await axios.get(`${API_URL}/api/insights?userId=${userId}`);
         if (res.data.trends && res.data.trends.length > 0) {
           const formatted = res.data.trends.reverse().map((t: any, i: number) => ({
             day: `Session ${i + 1}`,
@@ -116,7 +117,7 @@ export default function Dashboard({ onNavigate, language = 'English' }: { onNavi
 
     const fetchMetrics = async (userId: string) => {
       try {
-        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/metrics?userId=${userId}`);
+        const res = await axios.get(`${API_URL}/api/metrics?userId=${userId}`);
         setMetrics(res.data);
       } catch (e) {
         console.error("Error fetching metrics:", e);
@@ -125,9 +126,9 @@ export default function Dashboard({ onNavigate, language = 'English' }: { onNavi
 
     const testConnection = async () => {
       console.log("🔍 Sahaay: Testing Backend Connection...");
-      console.log("📍 Target URL:", import.meta.env.VITE_API_URL);
+      console.log("📍 Target URL:", API_URL);
       try {
-        const res = await axios.get(`${import.meta.env.VITE_API_URL}/health`);
+        const res = await axios.get(`${API_URL}/health`);
         console.log("✅ Sahaay Backend: Online", res.data);
       } catch (err) {
         console.error("❌ Sahaay Backend: Offline or Connection Error", err);
