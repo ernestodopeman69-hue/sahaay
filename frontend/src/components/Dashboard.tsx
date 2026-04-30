@@ -1,7 +1,4 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
-import { motion } from 'framer-motion';
 import { supabase } from '../supabaseClient';
 import {
   SparklesIcon,
@@ -9,6 +6,7 @@ import {
   ShieldCheckIcon
 } from '@heroicons/react/24/outline';
 import CareCompanion from './CareCompanion';
+import axios from 'axios';
 
 
 const translations: Record<string, Record<string, string>> = {
@@ -79,7 +77,7 @@ const translations: Record<string, Record<string, string>> = {
 
 export default function Dashboard({ onNavigate, language = 'English' }: { onNavigate: (tab: string) => void, language?: string }) {
   const t = translations[language] || translations['English'];
-  const [data, setData] = useState<any[]>([]);
+  const [, setData] = useState<any[]>([]);
   const [summary, setSummary] = useState('');
   const [metrics, setMetrics] = useState({
     emotionalStability: 50,

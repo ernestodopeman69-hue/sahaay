@@ -11,9 +11,10 @@ import {
   UserPlusIcon,
   CheckIcon,
   UsersIcon,
-  BellIcon
+  NoSymbolIcon,
+  EnvelopeIcon
 } from '@heroicons/react/24/outline';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 interface Message {
   id: string;
@@ -199,7 +200,7 @@ export default function CommunityChat({ language = 'English' }: { language?: str
           fetchFriendRequests();
         }
       })
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'private_messages' }, payload => {
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'private_messages' }, () => {
         // Private messages are now handled globally or silently refreshed
       })
       .subscribe();
@@ -568,7 +569,7 @@ export default function CommunityChat({ language = 'English' }: { language?: str
             requests={friendRequests} 
             friends={friends} 
             onRefresh={() => { fetchFriendRequests(); fetchFriends(); }}
-            onOpenChat={(f) => { setActiveTab('messages'); /* logic to select friend */ }}
+            onOpenChat={() => { setActiveTab('messages'); /* logic to select friend */ }}
           />
         )}
 

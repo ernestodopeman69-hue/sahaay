@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import { PaperAirplaneIcon, MicrophoneIcon } from '@heroicons/react/24/solid';
-import { SparklesIcon, ChatBubbleLeftRightIcon, SpeakerWaveIcon, PauseIcon } from '@heroicons/react/24/outline';
+import { SparklesIcon, SpeakerWaveIcon, PauseIcon } from '@heroicons/react/24/outline';
 import { motion, AnimatePresence } from 'framer-motion';
 import { supabase } from '../supabaseClient';
 import SplineScene from './SplineScene';
@@ -318,7 +318,7 @@ export default function ChatInterface({ language, onNavigate }: { language: stri
 
     // Simulate "Delivered" status (double grey tick)
     setTimeout(() => {
-      setMessages(prev => prev.map(m => m.id === userMsg.id ? { ...m, status: 'delivered' } : m));
+      setMessages(prev => prev.map(m => m.id === userMsg.id ? { ...m, status: 'delivered' as const } : m));
     }, 600);
 
     try {
@@ -341,7 +341,7 @@ export default function ChatInterface({ language, onNavigate }: { language: stri
         
         // Update user message to "Read" (double blue tick) and add bot response
         setMessages(prev => [
-          ...prev.map(m => m.id === userMsg.id ? { ...m, status: 'read' } : m),
+          ...prev.map(m => m.id === userMsg.id ? { ...m, status: 'read' as const } : m),
           botMsg
         ]);
         

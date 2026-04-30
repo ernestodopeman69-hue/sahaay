@@ -1,13 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { supabase } from '../supabaseClient';
 import { 
   TrashIcon, 
   NoSymbolIcon,
-  UserGroupIcon,
   ShieldCheckIcon,
   ExclamationTriangleIcon
 } from '@heroicons/react/24/outline';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 interface Message {
   id: string;
@@ -23,7 +22,6 @@ export default function AdminPanel() {
   const [user, setUser] = useState<any>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [bannedIds, setBannedIds] = useState<string[]>([]);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const ADMIN_EMAIL = 'admin@sahaay.com'; // Admin Whitelist
 

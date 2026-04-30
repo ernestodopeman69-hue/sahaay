@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   BeakerIcon, 
@@ -7,10 +7,8 @@ import {
   SparklesIcon, 
   MusicalNoteIcon, 
   NoSymbolIcon,
-  HeartIcon,
   XMarkIcon,
-  CheckIcon,
-  BellIcon
+  CheckIcon
 } from '@heroicons/react/24/outline';
 import { supabase } from '../supabaseClient';
 

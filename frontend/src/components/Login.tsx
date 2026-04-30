@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { supabase } from '../supabaseClient';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, type Variants } from 'framer-motion';
 import { EnvelopeIcon, LockClosedIcon, EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import SplineScene from './SplineScene';
 
@@ -34,7 +34,7 @@ export default function Login() {
     }
   };
 
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
     visible: { 
       opacity: 1, 
@@ -43,7 +43,7 @@ export default function Login() {
     }
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 15 },
     visible: { opacity: 1, y: 0 }
   };
