@@ -18,18 +18,18 @@ app = FastAPI(title="Sahaay Multi-LLM AI Service")
 def get_llm():
     """
     Selects the LLM provider based on available environment variables.
-    OpenAI is the primary provider, Groq is the fallback.
+    Groq is now the primary provider, OpenAI is the fallback.
     """
     openai_key = os.getenv("OPENAI_API_KEY")
     groq_key = os.getenv("GROQ_API_KEY")
 
-    if openai_key and not openai_key.startswith("your_"):
-        print("Using Primary Provider: OpenAI")
-        return ChatOpenAI(model="gpt-3.5-turbo", temperature=0.2, timeout=10)
-    
     if groq_key and not groq_key.startswith("your_"):
-        print("Using Fallback Provider: Groq (llama-3.3-70b-versatile)")
+        print("Using Primary Provider: Groq (llama-3.3-70b-versatile)")
         return ChatGroq(model="llama-3.3-70b-versatile", temperature=0.2, groq_api_key=groq_key)
+    
+    if openai_key and not openai_key.startswith("your_"):
+        print("Using Fallback Provider: OpenAI")
+        return ChatOpenAI(model="gpt-3.5-turbo", temperature=0.2, timeout=10)
 
     print("ERROR: No valid LLM API keys found.")
     return None
@@ -88,29 +88,29 @@ async def chat_endpoint(request: ChatRequest):
     openai_key = os.getenv("OPENAI_API_KEY")
     groq_key = os.getenv("GROQ_API_KEY")
     
-    # 1. Try OpenAI Primary
-    if openai_key and not openai_key.startswith("your_"):
-        try:
-            print("Attempting OpenAI...")
-            llm_openai = ChatOpenAI(model="gpt-3.5-turbo", temperature=0.2, timeout=10)
-            chain = master_prompt | llm_openai | JsonOutputParser()
-            result = chain.invoke({"message": request.message})
-            return ChatResponse(**result)
-        except Exception as e:
-            print(f"OpenAI failed (likely quota): {e}")
-            if not groq_key:
-                raise HTTPException(status_code=500, detail="OpenAI failed and no Groq fallback configured.")
-    
-    # 2. Try Groq Fallback
+    # 1. Try Groq Primary
     if groq_key and not groq_key.startswith("your_"):
         try:
-            print("Attempting Groq Fallback...")
+            print("Attempting Groq...")
             llm_groq = ChatGroq(model="llama-3.3-70b-versatile", temperature=0.2, groq_api_key=groq_key)
             chain = master_prompt | llm_groq | JsonOutputParser()
             result = chain.invoke({"message": request.message})
             return ChatResponse(**result)
         except Exception as e:
             print(f"Groq failed: {e}")
+            if not openai_key:
+                print("No OpenAI fallback available.")
+    
+    # 2. Try OpenAI Fallback
+    if openai_key and not openai_key.startswith("your_"):
+        try:
+            print("Attempting OpenAI Fallback...")
+            llm_openai = ChatOpenAI(model="gpt-3.5-turbo", temperature=0.2, timeout=10)
+            chain = master_prompt | llm_openai | JsonOutputParser()
+            result = chain.invoke({"message": request.message})
+            return ChatResponse(**result)
+        except Exception as e:
+            print(f"OpenAI failed: {e}")
             
     # 3. Last Resort Fallback
     return ChatResponse(
