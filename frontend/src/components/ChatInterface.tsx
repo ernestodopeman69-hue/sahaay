@@ -321,11 +321,11 @@ export default function ChatInterface({ language, onNavigate }: { language: stri
       setMessages(prev => prev.map(m => m.id === userMsg.id ? { ...m, status: 'delivered' as const } : m));
     }, 600);
 
-    console.log("🚀 Chat Request:", { url: `${import.meta.env.VITE_API_URL}/chat`, body: { message: userMsg.text, userId: 'guest' } });
+    console.log("🚀 Chat Request:", { url: `${import.meta.env.VITE_import.meta.env.VITE_API_URL}/chat`, body: { message: userMsg.text, userId: 'guest' } });
 
     try {
       const { data: { user } } = await supabase.auth.getUser();
-      const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/chat`, {
+      const { data } = await axios.post(`${import.meta.env.VITE_import.meta.env.VITE_API_URL}/chat`, {
         message: userMsg.text,
         language,
         userId: user?.id || 'guest',
