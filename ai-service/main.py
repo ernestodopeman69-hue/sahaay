@@ -11,7 +11,7 @@ from dotenv import load_dotenv
 # Load environment variables
 load_dotenv()
 
-app = FastAPI(title="Sahaay Groq AI Service")
+app = FastAPI(title="Sahaay Groq AI Service v2.0")
 
 # Initialize Groq
 def get_llm():
