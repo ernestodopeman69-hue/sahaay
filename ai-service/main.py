@@ -92,7 +92,7 @@ async def chat_endpoint(request: ChatRequest):
     if groq_key and not groq_key.startswith("your_"):
         try:
             print("Attempting Groq...")
-            llm_groq = ChatGroq(model="llama-3.3-70b-versatile", temperature=0.2, groq_api_key=groq_key)
+            llm_groq = ChatGroq(model="llama3-8b-8192", temperature=0.2, groq_api_key=groq_key)
             chain = master_prompt | llm_groq | JsonOutputParser()
             result = chain.invoke({"message": request.message})
             return ChatResponse(**result)
