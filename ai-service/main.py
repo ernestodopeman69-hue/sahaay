@@ -56,6 +56,10 @@ master_prompt = ChatPromptTemplate.from_messages([
 ])
 
 # --- Endpoints ---
+@app.get("/")
+async def root():
+    return {"status": "Sahaay AI is Online", "port": 8080}
+
 @app.post("/chat", response_model=ChatResponse)
 async def chat_endpoint(request: ChatRequest):
     llm = get_llm()
@@ -99,4 +103,5 @@ async def health():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    # Port 8080 for Railway
+    uvicorn.run(app, host="0.0.0.0", port=8080)
