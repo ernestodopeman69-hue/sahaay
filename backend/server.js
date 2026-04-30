@@ -21,6 +21,9 @@ let supabase = null;
 
 if (supabaseUrl && supabaseUrl.startsWith('https://')) {
   supabase = createClient(supabaseUrl, supabaseKey);
+  console.log('✅ Supabase Client initialized.');
+} else {
+  console.warn('⚠️ SUPABASE_URL is missing or invalid. Check your environment variables.');
 }
 
 // Helper for local fallback if Supabase isn't set up
