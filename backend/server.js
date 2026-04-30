@@ -68,7 +68,8 @@ app.post('/api/chat', async (req, res) => {
   try {
     // 1. Call CrewAI Python Service
     console.log('Calling CrewAI service...');
-    const aiResponse = await axios.post('http://localhost:8000/chat', { message });
+    const aiServiceUrl = process.env.AI_SERVICE_URL || 'http://localhost:8000';
+    const aiResponse = await axios.post(`${aiServiceUrl}/chat`, { message });
     const { emotion, confidence, risk, reply, suggestions } = aiResponse.data;
 
     // 2. Store in Supabase or SQLite
@@ -210,7 +211,8 @@ app.get('/api/insights', async (req, res) => {
     const emotions = history.map(h => h.emotion);
     let summary = "You've been sharing a range of feelings lately.";
     try {
-      const aiSum = await axios.post('http://localhost:8000/summarize', { emotions });
+      const aiServiceUrl = process.env.AI_SERVICE_URL || 'http://localhost:8000';
+      const aiSum = await axios.post(`${aiServiceUrl}/summarize`, { emotions });
       summary = aiSum.data.summary;
     } catch (e) {
       console.warn('AI Summarization failed:', e.message);
