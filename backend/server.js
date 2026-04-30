@@ -117,12 +117,15 @@ const handleChat = async (req, res) => {
     res.json({ reply, emotion, risk, suggestions });
 
   } catch (error) {
-    console.error('AI Service Error:', error.message);
-    res.status(500).json({ 
-      reply: "I'm having a bit of trouble connecting right now, but I'm still here for you. 💙",
-      emotion: 'unknown',
-      risk: 'low',
-      suggestions: ['Try taking a deep breath', 'Maybe check your connection']
+    console.error('❌ Chat Error:', error.message);
+    if (error.response) {
+      console.error('Response Status:', error.response.status);
+      console.error('Response Data:', error.response.data);
+    }
+    res.json({ 
+      reply: "I'm having a bit of trouble connecting to my brain right now. Please check your connection! 💙",
+      emotion: 'neutral',
+      error: error.message
     });
   }
 };
