@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { XMarkIcon, SpeakerWaveIcon, SpeakerXMarkIcon, PlayIcon, PauseIcon } from '@heroicons/react/24/outline';
+import { XMarkIcon, SpeakerWaveIcon, SpeakerXMarkIcon, PlayIcon } from '@heroicons/react/24/outline';
 import { supabase } from '../supabaseClient';
 import axios from 'axios';
 
@@ -13,7 +13,6 @@ interface VideoSectionProps {
 export default function VideoSection({ title, videos, onClose }: VideoSectionProps) {
   const [selectedVideo, setSelectedVideo] = useState<any>(null);
   const [isMuted, setIsMuted] = useState(true);
-  const [isPlaying, setIsPlaying] = useState(true);
   const [startTime, setStartTime] = useState<number | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -22,7 +21,6 @@ export default function VideoSection({ title, videos, onClose }: VideoSectionPro
     if (selectedVideo && videoRef.current) {
       videoRef.current.play().catch(err => {
         console.warn("Autoplay blocked, waiting for user gesture:", err);
-        setIsPlaying(false);
       });
       setStartTime(Date.now());
     }
@@ -52,20 +50,6 @@ export default function VideoSection({ title, videos, onClose }: VideoSectionPro
   const closePlayer = () => {
     trackTime();
     setSelectedVideo(null);
-  };
-
-  const togglePlay = () => {
-    if (videoRef.current) {
-      if (videoRef.current.paused) {
-        videoRef.current.play();
-        setIsPlaying(true);
-        setStartTime(Date.now());
-      } else {
-        trackTime();
-        videoRef.current.pause();
-        setIsPlaying(false);
-      }
-    }
   };
 
   return (
