@@ -24,7 +24,7 @@ export default function Games() {
     const fetchEmotion = async () => {
       try {
         const { data: { user } } = await supabase.auth.getUser();
-        const res = await axios.get(`${import.meta.env.VITE_import.meta.env.VITE_API_URL}/api/insights?userId=${user?.id || 'guest'}`);
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/insights?userId=${user?.id || 'guest'}`);
         const lastEmotion = res.data.trends?.[0]?.emotion || 'neutral';
         
         if (lastEmotion === 'distressed' || lastEmotion === 'sad') setSuggestion('breathing');
