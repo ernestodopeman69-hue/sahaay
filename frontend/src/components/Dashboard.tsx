@@ -127,7 +127,7 @@ export default function Dashboard({ onNavigate, language = 'English' }: { onNavi
       console.log("🔍 Sahaay: Testing Backend Connection...");
       console.log("📍 Target URL:", import.meta.env.VITE_API_URL);
       try {
-        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/health`);
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/health`);
         console.log("✅ Sahaay Backend: Online", res.data);
       } catch (err) {
         console.error("❌ Sahaay Backend: Offline or Connection Error", err);

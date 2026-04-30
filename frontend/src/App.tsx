@@ -22,8 +22,9 @@ export default function App() {
     // Initial Production Connection Test
     const testConnection = async () => {
       console.log("🚀 Sahaay App Load: Initializing connection test...");
+      console.log("🌐 API URL:", import.meta.env.VITE_API_URL);
       try {
-        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/health`);
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/health`);
         console.log("🌐 API Connection Status:", res.status === 200 ? "Online" : "Check Backend", res.data);
       } catch (err) {
         console.warn("⚠️ API Connection Failed. Is VITE_API_URL set in production?", err);
