@@ -38,16 +38,17 @@ class SummaryResponse(BaseModel):
     summary: str
 
 # --- Prompt Templates ---
+# We use double curly braces {{ }} to escape them for LangChain
 system_instructions = """You are Sahaay, a supportive AI for caregivers. 
     Analyze the user's emotion and provide a supportive reply.
     Return ONLY JSON in this format:
-    {
+    {{
         "emotion": "sad | anxious | angry | happy | distressed",
         "confidence": 0.9,
         "risk": "LOW",
         "reply": "your empathetic reply here",
         "suggestions": ["suggestion 1", "suggestion 2"]
-    }
+    }}
 """
 
 master_prompt = ChatPromptTemplate.from_messages([
@@ -71,6 +72,7 @@ async def chat_endpoint(request: ChatRequest):
         )
 
     try:
+        # Use simple string interpolation for the prompt
         chain = master_prompt | llm | JsonOutputParser()
         result = chain.invoke({"message": request.message})
         return ChatResponse(**result)
@@ -89,12 +91,13 @@ async def summarize_endpoint(request: SummaryRequest):
         return SummaryResponse(summary="I'm here for you.")
     try:
         prompt = ChatPromptTemplate.from_messages([
-            ("system", "Summarize these emotions in one warm sentence: {emotions}. Return JSON {'summary': '...'}")
+            ("system", "Summarize these emotions in one warm sentence: {emotions}. Return JSON {{\"summary\": \"...\"}}")
         ])
         chain = prompt | llm | JsonOutputParser()
         result = chain.invoke({"emotions": ", ".join(request.emotions)})
         return SummaryResponse(summary=result.get("summary", "You've been navigating a lot lately."))
     except Exception as e:
+        print(f"Summary Error: {e}")
         return SummaryResponse(summary="Remember to be kind to yourself today.")
 
 @app.get("/health")
