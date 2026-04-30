@@ -95,7 +95,7 @@ export default function Dashboard({ onNavigate, language = 'English' }: { onNavi
         const userId = user?.id || 'guest';
 
         // Fetch Trends
-        const res = await axios.get(`http://localhost:3001/api/insights?userId=${userId}`);
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/insights?userId=${userId}`);
         if (res.data.trends && res.data.trends.length > 0) {
           const formatted = res.data.trends.reverse().map((t: any, i: number) => ({
             day: `Session ${i + 1}`,
@@ -116,7 +116,7 @@ export default function Dashboard({ onNavigate, language = 'English' }: { onNavi
 
     const fetchMetrics = async (userId: string) => {
       try {
-        const res = await axios.get(`http://localhost:3001/api/metrics?userId=${userId}`);
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/metrics?userId=${userId}`);
         setMetrics(res.data);
       } catch (e) {
         console.error("Error fetching metrics:", e);

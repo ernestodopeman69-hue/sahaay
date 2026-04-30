@@ -323,7 +323,7 @@ export default function ChatInterface({ language, onNavigate }: { language: stri
 
     try {
       const { data: { user } } = await supabase.auth.getUser();
-      const { data } = await axios.post('http://localhost:3001/api/chat', {
+      const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/api/chat`, {
         message: userMsg.text,
         language,
         userId: user?.id || 'guest',
