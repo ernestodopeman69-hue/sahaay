@@ -5,7 +5,13 @@ const { createClient } = require('@supabase/supabase-js');
 require('dotenv').config();
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: '*'
+}));
+
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'ok' });
+});
 app.use(express.json());
 
 // Supabase Setup
@@ -218,7 +224,5 @@ app.get('/api/insights', async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
-  console.log(`Node backend running on port ${PORT}`);
-});
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server running on ${PORT}`));
