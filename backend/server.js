@@ -80,8 +80,11 @@ const handleChat = async (req, res) => {
   try {
     // 1. Call CrewAI Python Service
     console.log('Calling CrewAI service...');
-    const aiServiceUrl = process.env.AI_SERVICE_URL || 'http://localhost:8000';
-    console.log(`Sending request to AI Service at: ${aiServiceUrl}/chat`);
+    let aiServiceUrl = process.env.AI_SERVICE_URL || 'http://localhost:8000';
+    // Remove trailing slash if present
+    aiServiceUrl = aiServiceUrl.replace(/\/$/, '');
+    
+    console.log(`🚀 Routing chat request to: ${aiServiceUrl}/chat`);
     const aiResponse = await axios.post(`${aiServiceUrl}/chat`, { message }, { timeout: 15000 });
     const { emotion, confidence, risk, reply, suggestions } = aiResponse.data;
 
