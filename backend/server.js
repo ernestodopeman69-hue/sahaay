@@ -6,7 +6,8 @@ require('dotenv').config();
 
 const app = express();
 app.use(cors({
-  origin: '*'
+  origin: ['https://sahaay-coral.vercel.app', 'http://localhost:5173'],
+  credentials: true
 }));
 
 app.get('/health', (req, res) => {
@@ -62,7 +63,18 @@ db.exec(`
   )
 `);
 
+// Alias for /api/chat to /chat as requested
+app.post('/chat', async (req, res) => {
+  console.log('Incoming chat request to /chat');
+  return handleChat(req, res);
+});
+
 app.post('/api/chat', async (req, res) => {
+  console.log('Incoming chat request to /api/chat');
+  return handleChat(req, res);
+});
+
+const handleChat = async (req, res) => {
   const { message, userId = 'guest' } = req.body;
 
   try {
@@ -109,7 +121,7 @@ app.post('/api/chat', async (req, res) => {
       suggestions: ['Try taking a deep breath', 'Maybe check your connection']
     });
   }
-});
+};
 
 // Track User Activity (Calm Minutes, Hub Usage)
 app.post('/api/activity', (req, res) => {

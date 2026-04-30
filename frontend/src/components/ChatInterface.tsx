@@ -5,7 +5,6 @@ import { SparklesIcon, SpeakerWaveIcon, PauseIcon } from '@heroicons/react/24/ou
 import { motion, AnimatePresence } from 'framer-motion';
 import { supabase } from '../supabaseClient';
 import SplineScene from './SplineScene';
-import { API_URL } from '../config/api';
 
 
 type Message = {
@@ -322,13 +321,16 @@ export default function ChatInterface({ language, onNavigate }: { language: stri
       setMessages(prev => prev.map(m => m.id === userMsg.id ? { ...m, status: 'delivered' as const } : m));
     }, 600);
 
+    console.log("🚀 Chat Request:", { url: `${import.meta.env.VITE_API_URL}/chat`, body: { message: userMsg.text, userId: 'guest' } });
+
     try {
       const { data: { user } } = await supabase.auth.getUser();
-      const { data } = await axios.post(`${API_URL}/api/chat`, {
+      const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/chat`, {
         message: userMsg.text,
         language,
         userId: user?.id || 'guest',
       });
+      console.log("✅ Chat Response:", data);
 
       setTimeout(() => {
         const botMsg: Message = {
@@ -349,9 +351,15 @@ export default function ChatInterface({ language, onNavigate }: { language: stri
         if (data.risk === 'HIGH') setHighRiskAlert(true);
         setIsTyping(false);
       }, 1000);
-    } catch (e) {
+    } catch (e: any) {
       setIsTyping(false);
-      console.error(e);
+      console.error("❌ Chat API Error:", e);
+      const errorMsg: Message = {
+        id: Date.now(),
+        text: "I'm having a bit of trouble connecting to my brain right now. Please check your connection! 💙",
+        sender: 'bot'
+      };
+      setMessages(prev => [...prev, errorMsg]);
     }
   };
 

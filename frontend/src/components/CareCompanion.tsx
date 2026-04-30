@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  BeakerIcon, 
-  MapIcon, 
-  SunIcon, 
-  SparklesIcon, 
-  MusicalNoteIcon, 
+import {
+  BeakerIcon,
+  MapIcon,
+  SunIcon,
+  SparklesIcon,
+  MusicalNoteIcon,
   NoSymbolIcon,
   HeartIcon,
   CheckCircleIcon,
@@ -13,7 +13,6 @@ import {
 } from '@heroicons/react/24/outline';
 import { supabase } from '../supabaseClient';
 import axios from 'axios';
-import { API_URL } from '../config/api';
 
 interface Task {
   id: string;
@@ -136,19 +135,19 @@ export default function CareCompanion({ onNavigate, language = 'English' }: { on
               <div className="w-16 h-16 rounded-2xl bg-primary/20 flex items-center justify-center text-primary-light shadow-lg">
                 <currentTask.icon className="w-8 h-8" />
               </div>
-              
+
               <div className="flex-1 text-center md:text-left">
                 <h3 className="text-xl font-bold text-text-main mb-1">{currentTask.title}</h3>
                 <p className="text-text-muted mb-4">{currentTask.description}</p>
                 <div className="flex items-center justify-center md:justify-start gap-4">
-                  <button 
+                  <button
                     onClick={() => handleDone(currentTask.id)}
                     className="flex items-center gap-2 px-6 py-2.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/30 transition-all font-bold text-sm"
                   >
                     <CheckCircleIcon className="w-5 h-5" />
                     Done
                   </button>
-                  <button 
+                  <button
                     onClick={() => handleSkip(currentTask.id)}
                     className="flex items-center gap-2 px-6 py-2.5 rounded-full bg-white/5 text-text-muted border border-white/10 hover:bg-white/10 transition-all font-bold text-sm"
                   >
@@ -167,7 +166,7 @@ export default function CareCompanion({ onNavigate, language = 'English' }: { on
               <SparklesIcon className="w-12 h-12 text-primary-light mx-auto mb-4" />
               <h3 className="text-xl font-bold text-text-main mb-2">You've completed all tasks!</h3>
               <p className="text-text-muted">Take some time to rest. You deserve it.</p>
-              <button 
+              <button
                 onClick={() => setTasks(tasks.map(t => ({ ...t, done: false, skipped: false })))}
                 className="mt-6 text-primary-light hover:underline text-sm font-bold"
               >
@@ -179,7 +178,7 @@ export default function CareCompanion({ onNavigate, language = 'English' }: { on
 
         {/* Progress Feedback */}
         {doneCount > 0 && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             className="mt-4 text-center text-sm font-medium text-pink-400"
