@@ -17,7 +17,8 @@ app = FastAPI(title="Sahaay Groq AI Service v3.0")
 def get_llm():
     groq_key = os.getenv("GROQ_API_KEY")
     if groq_key and not groq_key.startswith("your_"):
-        return ChatGroq(model="llama-3.3-70b-versatile", temperature=0.2, groq_api_key=groq_key)
+        # Switched to 8b-instant for maximum speed to avoid timeouts
+        return ChatGroq(model="llama-3.1-8b-instant", temperature=0.2, groq_api_key=groq_key)
     return None
 
 # --- Models ---

@@ -85,7 +85,7 @@ const handleChat = async (req, res) => {
     aiServiceUrl = aiServiceUrl.replace(/\/$/, '');
     
     console.log(`🚀 Routing chat request to: ${aiServiceUrl}/chat`);
-    const aiResponse = await axios.post(`${aiServiceUrl}/chat`, { message }, { timeout: 15000 });
+    const aiResponse = await axios.post(`${aiServiceUrl}/chat`, { message }, { timeout: 45000 });
     const { emotion, confidence, risk, reply, suggestions } = aiResponse.data;
 
     // 2. Store in Supabase or SQLite
