@@ -81,7 +81,8 @@ const handleChat = async (req, res) => {
     // 1. Call CrewAI Python Service
     console.log('Calling CrewAI service...');
     const aiServiceUrl = process.env.AI_SERVICE_URL || 'http://localhost:8000';
-    const aiResponse = await axios.post(`${aiServiceUrl}/chat`, { message });
+    console.log(`Sending request to AI Service at: ${aiServiceUrl}/chat`);
+    const aiResponse = await axios.post(`${aiServiceUrl}/chat`, { message }, { timeout: 15000 });
     const { emotion, confidence, risk, reply, suggestions } = aiResponse.data;
 
     // 2. Store in Supabase or SQLite
