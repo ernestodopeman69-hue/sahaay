@@ -65,34 +65,34 @@ export default function Games() {
   }
 
   return (
-    <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-1000 pb-20">
+    <div className="space-y-8 md:space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-1000 pb-20">
       <div className="flex flex-col gap-2">
-        <h1 className="text-5xl font-extrabold text-white tracking-tighter">Calm Games</h1>
-        <p className="text-text-muted max-w-xl leading-relaxed text-lg">Interactive spaces designed to ground your thoughts and bring a moment of peace.</p>
+        <h1 className="text-3xl md:text-5xl font-extrabold text-white tracking-tighter">Calm Games</h1>
+        <p className="text-text-muted max-w-xl leading-relaxed text-base md:text-lg">Interactive spaces designed to ground your thoughts and bring a moment of peace.</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
         {gamesList.map((game) => (
           <motion.div
             key={game.id}
             whileHover={{ y: -10, scale: 1.02 }}
-            className={`glass-panel p-10 bg-gradient-to-br ${game.color} border border-white/10 rounded-[3.5rem] cursor-pointer group transition-all relative overflow-hidden shadow-2xl ${game.shadow}`}
+            className={`glass-panel p-6 md:p-10 bg-gradient-to-br ${game.color} border border-white/10 rounded-[2.5rem] md:rounded-[3.5rem] cursor-pointer group transition-all relative overflow-hidden shadow-2xl ${game.shadow}`}
             onClick={() => handleStartGame(game.id)}
           >
             {suggestion === game.id && (
-              <div className="absolute top-8 right-10 flex items-center gap-2 bg-primary/20 text-primary-light px-5 py-2 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] border border-primary/30 shadow-[0_0_20px_rgba(102,252,241,0.15)]">
-                <SparklesIcon className="w-4 h-4" /> Recommended
+              <div className="absolute top-4 right-6 md:top-8 md:right-10 flex items-center gap-2 bg-primary/20 text-primary-light px-3 md:px-5 py-1.5 md:py-2 rounded-full text-[8px] md:text-[10px] font-bold uppercase tracking-[0.2em] border border-primary/30 shadow-[0_0_20px_rgba(102,252,241,0.15)]">
+                <SparklesIcon className="w-3 md:w-4 h-3 md:h-4" /> Recommended
               </div>
             )}
             
-            <div className="w-20 h-20 bg-white/5 rounded-[2rem] flex items-center justify-center mb-10 group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-700 border border-white/10">
-              <game.icon className="w-10 h-10 text-gray-400 group-hover:text-primary-light transition-colors" />
+            <div className="w-16 h-16 md:w-20 md:h-20 bg-white/5 rounded-[1.5rem] md:rounded-[2rem] flex items-center justify-center mb-6 md:mb-10 group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-700 border border-white/10">
+              <game.icon className="w-8 h-8 md:w-10 md:h-10 text-gray-400 group-hover:text-primary-light transition-colors" />
             </div>
             
-            <h3 className="text-3xl font-extrabold text-white mb-4 tracking-tight">{game.title}</h3>
-            <p className="text-text-muted text-base leading-relaxed mb-12 max-w-xs">{game.desc}</p>
+            <h3 className="text-2xl md:text-3xl font-extrabold text-white mb-3 md:mb-4 tracking-tight">{game.title}</h3>
+            <p className="text-text-muted text-sm md:text-base leading-relaxed mb-8 md:mb-12 max-w-xs">{game.desc}</p>
             
-            <button className="flex items-center gap-4 bg-white/5 group-hover:bg-primary group-hover:text-dark-900 px-10 py-4 rounded-2xl text-sm font-black uppercase tracking-widest transition-all border border-white/10 group-hover:border-primary shadow-xl">
+            <button className="flex items-center gap-4 bg-white/5 group-hover:bg-primary group-hover:text-dark-900 px-8 md:px-10 py-3 md:py-4 rounded-2xl text-xs md:text-sm font-black uppercase tracking-widest transition-all border border-white/10 group-hover:border-primary shadow-xl">
               Play Space
             </button>
             

@@ -158,24 +158,24 @@ export default function Dashboard({ onNavigate, language = 'English' }: { onNavi
   }
 
   return (
-    <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
+    <div className="space-y-8 md:space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700 pb-10">
       {/* Header Section */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
         <div>
-          <h1 className="text-4xl font-extrabold text-text-main tracking-tight">{t.welcome}</h1>
-          <p className="text-text-muted mt-2 text-lg">{t.feeling}</p>
+          <h1 className="text-3xl md:text-4xl font-extrabold text-text-main tracking-tight leading-tight">{t.welcome}</h1>
+          <p className="text-text-muted mt-2 text-base md:text-lg">{t.feeling}</p>
         </div>
-        <div className="bg-primary/5 backdrop-blur-xl border border-primary/20 px-8 py-4 rounded-[2rem] flex items-center gap-4 shadow-2xl">
-          <div className="w-3 h-3 bg-primary rounded-full animate-pulse shadow-[0_0_15px_rgba(255,77,255,0.8)]" />
-          <span className="text-sm font-medium text-primary-light italic leading-relaxed">"{summary}"</span>
+        <div className="w-full lg:w-auto bg-primary/5 backdrop-blur-xl border border-primary/20 px-6 md:px-8 py-4 rounded-[1.5rem] md:rounded-[2rem] flex items-center gap-4 shadow-2xl">
+          <div className="flex-shrink-0 w-3 h-3 bg-primary rounded-full animate-pulse shadow-[0_0_15px_rgba(255,77,255,0.8)]" />
+          <span className="text-xs md:text-sm font-medium text-primary-light italic leading-relaxed">"{summary}"</span>
         </div>
       </div>
 
       {/* Quick Actions */}
-      <div className="flex flex-col sm:flex-row gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <button 
           onClick={() => onNavigate('chat')}
-          className="flex-1 py-4 rounded-2xl bg-gradient-to-r from-primary/80 to-primary text-white font-semibold text-lg neon-btn transition-all duration-300 transform hover:-translate-y-1 relative group"
+          className="w-full py-4 rounded-2xl bg-gradient-to-r from-primary/80 to-primary text-white font-semibold text-base md:text-lg neon-btn transition-all duration-300 transform hover:-translate-y-1 relative group overflow-hidden"
         >
           <div className="sweep-container">
             <div className="sweep-light" />
@@ -184,7 +184,7 @@ export default function Dashboard({ onNavigate, language = 'English' }: { onNavi
         </button>
         <button 
           onClick={() => onNavigate('games')}
-          className="flex-1 py-4 rounded-2xl bg-gradient-to-r from-blue-600/80 to-blue-500 text-white font-semibold text-lg neon-btn transition-all duration-300 transform hover:-translate-y-1"
+          className="w-full py-4 rounded-2xl bg-gradient-to-r from-blue-600/80 to-blue-500 text-white font-semibold text-base md:text-lg neon-btn transition-all duration-300 transform hover:-translate-y-1"
         >
           {t.games}
         </button>
@@ -196,7 +196,7 @@ export default function Dashboard({ onNavigate, language = 'English' }: { onNavi
       {/* Sahaay Community Button */}
       <button 
         onClick={() => onNavigate('community')}
-        className="w-full py-4 rounded-2xl bg-gradient-to-r from-purple-600/80 to-pink-500 text-white font-semibold text-lg neon-btn transition-all duration-300 transform hover:-translate-y-1 relative group"
+        className="w-full py-4 rounded-2xl bg-gradient-to-r from-purple-600/80 to-pink-500 text-white font-semibold text-base md:text-lg neon-btn transition-all duration-300 transform hover:-translate-y-1 relative group overflow-hidden"
       >
         <div className="sweep-container">
           <div className="sweep-light" />
@@ -205,57 +205,56 @@ export default function Dashboard({ onNavigate, language = 'English' }: { onNavi
       </button>
 
       {/* Grid Cards (Existing) */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-
-        <div className="glass-panel p-6 bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 rounded-3xl shadow-xl">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="glass-panel p-5 md:p-6 bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 rounded-3xl shadow-xl">
           <div className="flex items-center gap-3 mb-4">
             <div className="p-2 bg-blue-500/20 rounded-xl">
               <ArrowTrendingUpIcon className="w-5 h-5 text-blue-400" />
             </div>
-            <span className="text-sm font-medium text-text-muted">{t.emotionalStability}</span>
+            <span className="text-xs md:text-sm font-medium text-text-muted uppercase tracking-wider">{t.emotionalStability}</span>
           </div>
-          <div className="text-3xl font-bold text-text-main">{metrics.emotionalStability}%</div>
+          <div className="text-2xl md:text-3xl font-bold text-text-main">{metrics.emotionalStability}%</div>
           <div className="text-[10px] text-green-400 mt-2 flex items-center gap-1">
-            <span>{metrics.stabilityTrend} 5%</span>
+            <span className="font-bold">{metrics.stabilityTrend} 5%</span>
             <span className="text-text-muted font-normal">{t.fromLastWeek}</span>
           </div>
         </div>
 
-        <div className="glass-panel p-6 bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 rounded-3xl shadow-xl">
+        <div className="glass-panel p-5 md:p-6 bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 rounded-3xl shadow-xl">
           <div className="flex items-center gap-3 mb-4">
             <div className="p-2 bg-purple-500/20 rounded-xl">
               <ShieldCheckIcon className="w-5 h-5 text-purple-400" />
             </div>
-            <span className="text-sm font-medium text-text-muted">{t.resilienceScore}</span>
+            <span className="text-xs md:text-sm font-medium text-text-muted uppercase tracking-wider">{t.resilienceScore}</span>
           </div>
-          <div className="text-3xl font-bold text-text-main">{metrics.resilience}</div>
+          <div className="text-2xl md:text-3xl font-bold text-text-main">{metrics.resilience}</div>
           <div className="text-[10px] text-purple-400 mt-2 flex items-center gap-1 uppercase tracking-widest font-bold">
             {t.steadyGrowth}
           </div>
         </div>
 
-        <div className="glass-panel p-6 bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 rounded-3xl shadow-xl">
+        <div className="glass-panel p-5 md:p-6 bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 rounded-3xl shadow-xl sm:col-span-2 lg:col-span-1">
           <div className="flex items-center gap-3 mb-4">
             <div className="p-2 bg-teal-500/20 rounded-xl">
               <SparklesIcon className="w-5 h-5 text-teal-400" />
             </div>
-            <span className="text-sm font-medium text-text-muted">{t.calmMinutes}</span>
+            <span className="text-xs md:text-sm font-medium text-text-muted uppercase tracking-wider">{t.calmMinutes}</span>
           </div>
-          <div className="text-3xl font-bold text-text-main">{metrics.calmMinutes}m</div>
+          <div className="text-2xl md:text-3xl font-bold text-text-main">{metrics.calmMinutes}m</div>
           <div className="text-[10px] text-teal-400 mt-2 flex items-center gap-1">
-            <span>{metrics.calmTrend} 5m</span>
+            <span className="font-bold">{metrics.calmTrend} 5m</span>
             <span className="text-text-muted font-normal">{t.thisMonth}</span>
           </div>
         </div>
       </div>
 
       {/* Suggested For You */}
-      <div>
+      <div className="pb-8">
         <div className="flex items-center gap-2 mb-6">
           <SparklesIcon className="w-6 h-6 text-primary-light" />
-          <h2 className="text-2xl font-bold text-text-main">{t.suggestedForYou}</h2>
+          <h2 className="text-xl md:text-2xl font-bold text-text-main uppercase tracking-tight">{t.suggestedForYou}</h2>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
             { id: 1, title: t.satisfyingVideos, category: t.water, url: '/videos/home1.mp4' },
             { id: 2, title: t.rainyWindow, category: t.nature, url: '/videos/home2.mp4' },
@@ -264,20 +263,32 @@ export default function Dashboard({ onNavigate, language = 'English' }: { onNavi
             <div 
               key={video.id} 
               onClick={() => onNavigate('hub')}
-              className="group relative bg-dark-800 rounded-3xl overflow-hidden border border-white/5 shadow-xl cursor-pointer hover:border-primary/50 hover:shadow-[0_0_15px_rgba(255,77,255,0.1)] transition-all duration-300 transform hover:-translate-y-1"
+              className="group relative bg-dark-800 rounded-3xl overflow-hidden border border-white/5 shadow-xl cursor-pointer hover:border-primary/50 hover:shadow-[0_0_25px_rgba(255,77,255,0.15)] transition-all duration-500 transform hover:-translate-y-2"
             >
-              <div className="aspect-video relative overflow-hidden bg-black/80 pointer-events-none">
-                <video src={video.url} autoPlay muted loop playsInline className="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity duration-500 group-hover:scale-105 pointer-events-none" />
-                <div className="absolute inset-0 bg-gradient-to-t from-dark-900 via-dark-900/40 to-transparent pointer-events-none" />
-                <div className="absolute bottom-4 left-4 pointer-events-none">
-                  <span className="px-2 py-1 bg-white/10 backdrop-blur-md rounded-md text-[10px] text-text-main uppercase tracking-wider font-semibold mb-2 block w-max">{video.category}</span>
-                  <h3 className="text-lg font-bold text-text-main group-hover:text-primary-light transition-colors">{video.title}</h3>
+              <div className="aspect-video relative overflow-hidden bg-black/80">
+                <video 
+                  src={video.url} 
+                  autoPlay 
+                  muted 
+                  loop 
+                  playsInline 
+                  className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-700 group-hover:scale-110" 
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-dark-900 via-dark-900/60 to-transparent" />
+                <div className="absolute bottom-4 left-4 right-4">
+                  <span className="px-2 py-1 bg-primary/20 backdrop-blur-md rounded-lg text-[9px] text-primary-light uppercase tracking-widest font-black mb-2 block w-max border border-primary/30">
+                    {video.category}
+                  </span>
+                  <h3 className="text-base md:text-lg font-bold text-text-main group-hover:text-primary-light transition-colors line-clamp-1">{video.title}</h3>
                 </div>
               </div>
             </div>
           ))}
         </div>
       </div>
+    </div>
+  );
+}
 
 
     </div>

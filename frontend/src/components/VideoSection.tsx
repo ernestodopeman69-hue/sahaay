@@ -59,27 +59,27 @@ export default function VideoSection({ title, videos, onClose }: VideoSectionPro
       exit={{ opacity: 0 }}
       className="fixed inset-0 z-[100] bg-dark-900/98 backdrop-blur-3xl overflow-y-auto"
     >
-      <div className="max-w-7xl mx-auto px-8 py-16">
-        <div className="flex justify-between items-center mb-16">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 py-8 md:py-16">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10 md:mb-16 gap-6">
           <div>
-            <h2 className="text-4xl font-bold text-white tracking-tight">{title}</h2>
-            <p className="text-gray-500 mt-2">Choose a visual to focus your mind. Exactly 5 scenes curated for you.</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight">{title}</h2>
+            <p className="text-gray-500 mt-2 text-sm md:text-base">Choose a visual to focus your mind. Curated for your peace.</p>
           </div>
           <button 
             onClick={onClose}
-            className="p-5 rounded-full bg-white/5 border border-white/10 text-white hover:bg-white/10 transition shadow-2xl"
+            className="p-4 md:p-5 rounded-full bg-white/5 border border-white/10 text-white hover:bg-white/10 transition shadow-2xl"
           >
-            <XMarkIcon className="w-6 h-6" />
+            <XMarkIcon className="w-5 h-5 md:w-6 md:h-6" />
           </button>
         </div>
 
-        {/* Grid of 5 Videos */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Grid of Videos */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {videos.map((video) => (
             <motion.div
               key={video.id}
               whileHover={{ y: -8 }}
-              className="group relative aspect-video bg-dark-800 rounded-[2.5rem] overflow-hidden border border-white/5 shadow-2xl cursor-pointer"
+              className="group relative aspect-video bg-dark-800 rounded-2xl md:rounded-[2.5rem] overflow-hidden border border-white/5 shadow-2xl cursor-pointer"
               onClick={() => setSelectedVideo(video)}
             >
               <video 
@@ -90,16 +90,16 @@ export default function VideoSection({ title, videos, onClose }: VideoSectionPro
                 loop 
                 playsInline
                 preload="auto"
-                className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-700"
+                className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-700" 
               />
               <div className="absolute inset-0 bg-gradient-to-t from-dark-900/80 to-transparent" />
               <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                <div className="w-16 h-16 rounded-full bg-primary/20 backdrop-blur-xl flex items-center justify-center border border-primary/30 shadow-[0_0_30px_rgba(102,252,241,0.2)]">
-                  <PlayIcon className="w-8 h-8 text-primary-light" />
+                <div className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-primary/20 backdrop-blur-xl flex items-center justify-center border border-primary/30 shadow-[0_0_30px_rgba(102,252,241,0.2)]">
+                  <PlayIcon className="w-6 h-6 md:w-8 md:h-8 text-primary-light" />
                 </div>
               </div>
-              <div className="absolute bottom-6 left-8">
-                <h4 className="text-lg font-bold text-white">{video.title}</h4>
+              <div className="absolute bottom-4 left-6 md:bottom-6 md:left-8">
+                <h4 className="text-base md:text-lg font-bold text-white">{video.title}</h4>
               </div>
             </motion.div>
           ))}
@@ -115,18 +115,18 @@ export default function VideoSection({ title, videos, onClose }: VideoSectionPro
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-[110] bg-dark-900 flex items-center justify-center group/player"
           >
-            <div className="absolute top-10 right-10 flex gap-4 z-20">
+            <div className="absolute top-6 right-6 md:top-10 md:right-10 flex gap-2 md:gap-4 z-20">
               <button 
                 onClick={() => setIsMuted(!isMuted)}
-                className="p-4 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-white transition"
+                className="p-3 md:p-4 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-white transition"
               >
-                {isMuted ? <SpeakerXMarkIcon className="w-6 h-6" /> : <SpeakerWaveIcon className="w-6 h-6" />}
+                {isMuted ? <SpeakerXMarkIcon className="w-5 h-5 md:w-6 md:h-6" /> : <SpeakerWaveIcon className="w-5 h-5 md:w-6 md:h-6" />}
               </button>
               <button 
                 onClick={closePlayer}
-                className="p-4 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-white transition"
+                className="p-3 md:p-4 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-white transition"
               >
-                <XMarkIcon className="w-6 h-6" />
+                <XMarkIcon className="w-5 h-5 md:w-6 md:h-6" />
               </button>
             </div>
 
@@ -143,9 +143,9 @@ export default function VideoSection({ title, videos, onClose }: VideoSectionPro
               className="w-full h-full object-cover"
             />
             
-            <div className="absolute bottom-10 left-0 w-full text-center z-20 pointer-events-none opacity-0 group-hover/player:opacity-100 transition-opacity">
-              <h3 className="text-3xl font-bold text-white drop-shadow-lg">{selectedVideo.title}</h3>
-              <p className="text-gray-300 mt-2 drop-shadow-md italic">Sanctuary Mode Active</p>
+            <div className="absolute bottom-6 md:bottom-10 left-0 w-full text-center z-20 pointer-events-none opacity-0 group-hover/player:opacity-100 transition-opacity px-4">
+              <h3 className="text-xl md:text-3xl font-bold text-white drop-shadow-lg">{selectedVideo.title}</h3>
+              <p className="text-xs md:text-sm text-gray-300 mt-1 md:mt-2 drop-shadow-md italic">Sanctuary Mode Active</p>
             </div>
           </motion.div>
         )}

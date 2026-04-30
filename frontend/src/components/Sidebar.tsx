@@ -8,7 +8,8 @@ import {
   SunIcon,
   MoonIcon,
   SwatchIcon,
-  UserGroupIcon
+  UserGroupIcon,
+  XMarkIcon
 } from '@heroicons/react/24/outline';
 import { supabase } from '../supabaseClient';
 import { useState, useEffect } from 'react';
@@ -38,7 +39,7 @@ const translations: Record<string, Record<string, string>> = {
     home: 'होम',
     chat: 'चैट',
     games: 'गेम्स',
-    hub: 'शांत हब',
+    hub: 'शांत हಬ',
     profile: 'प्रोफ़ाइल',
     community: 'कम्युनिटी',
     logout: 'लॉग आउट',
@@ -58,7 +59,19 @@ const translations: Record<string, Record<string, string>> = {
   }
 };
 
-export default function Sidebar({ activeTab, setActiveTab, language = 'English' }: { activeTab: string, setActiveTab: (t: string) => void, language?: string }) {
+export default function Sidebar({ 
+  activeTab, 
+  setActiveTab, 
+  language = 'English',
+  isOpen,
+  setIsOpen 
+}: { 
+  activeTab: string, 
+  setActiveTab: (t: string) => void, 
+  language?: string,
+  isOpen: boolean,
+  setIsOpen: (o: boolean) => void
+}) {
   const t = translations[language] || translations['English'];
   const [theme, setTheme] = useState(localStorage.getItem('sahaay_theme') || 'neon');
 
@@ -81,7 +94,6 @@ export default function Sidebar({ activeTab, setActiveTab, language = 'English' 
       
       if (error) {
         console.error("Logout error:", error.message);
-        // Force clear even if signOut fails
         localStorage.clear();
         sessionStorage.clear();
         window.location.href = "/login"; 
@@ -100,13 +112,32 @@ export default function Sidebar({ activeTab, setActiveTab, language = 'English' 
   };
 
   return (
-    <aside 
-      className="w-20 hover:w-64 flex flex-col h-full fixed left-0 top-0 z-20 overflow-hidden transition-all duration-300 group/sidebar shadow-2xl border-r border-white/10"
-      style={{ background: 'var(--sidebar-bg)', backdropFilter: 'var(--glass-blur)' }}
-    >
-      {/* ── Ambient Mesh Glows ── */}
-      <div className="absolute top-[-10%] left-[-20%] w-64 h-64 bg-purple-600/10 rounded-full blur-[80px] pointer-events-none" />
-      <div className="absolute bottom-[20%] right-[-30%] w-48 h-48 bg-pink-600/5 rounded-full blur-[60px] pointer-events-none" />
+    <>
+      {/* Mobile Overlay */}
+      {isOpen && (
+        <div 
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-30 md:hidden"
+          onClick={() => setIsOpen(false)}
+        />
+      )}
+
+      <aside 
+        className={`fixed left-0 top-0 h-full z-40 transition-all duration-300 shadow-2xl border-r border-white/10 flex flex-col overflow-hidden
+          ${isOpen ? 'w-64 translate-x-0' : 'w-20 -translate-x-full md:translate-x-0 md:w-20 md:hover:w-64'} 
+          group/sidebar`}
+        style={{ background: 'var(--sidebar-bg)', backdropFilter: 'var(--glass-blur)' }}
+      >
+        {/* Mobile Close Button */}
+        <button 
+          onClick={() => setIsOpen(false)}
+          className="md:hidden absolute top-4 right-4 p-2 text-white/50 hover:text-white"
+        >
+          <XMarkIcon className="w-6 h-6" />
+        </button>
+
+        {/* ── Ambient Mesh Glows ── */}
+        <div className="absolute top-[-10%] left-[-20%] w-64 h-64 bg-purple-600/10 rounded-full blur-[80px] pointer-events-none" />
+        <div className="absolute bottom-[20%] right-[-30%] w-48 h-48 bg-pink-600/5 rounded-full blur-[60px] pointer-events-none" />
 
       {/* Title Section */}
       <div className="p-6 relative z-10 flex flex-col items-center group-hover/sidebar:items-start transition-all duration-300">

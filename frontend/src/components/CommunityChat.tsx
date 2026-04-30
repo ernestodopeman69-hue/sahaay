@@ -490,51 +490,52 @@ export default function CommunityChat({ language = 'English' }: { language?: str
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-12rem)] glass-panel overflow-hidden border border-white/5 relative">
+  return (
+    <div className="flex flex-col h-[calc(100vh-8rem)] md:h-[calc(100vh-12rem)] glass-panel overflow-hidden border border-white/5 relative">
       {/* Header */}
-      <div className="p-4 border-b border-white/10 bg-black/20 flex items-center justify-between">
+      <div className="p-3 md:p-4 border-b border-white/10 bg-black/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3 md:gap-0">
         <div className="flex items-center gap-3">
           <div className="p-2 bg-primary/20 rounded-xl">
-            <UserGroupIcon className="w-6 h-6 text-primary-light" />
+            <UserGroupIcon className="w-5 h-5 md:w-6 md:h-6 text-primary-light" />
           </div>
           <div>
-            <h2 className="text-xl font-bold text-text-main">{t.title}</h2>
-            <div className="flex items-center gap-4 mt-1">
+            <h2 className="text-lg md:text-xl font-bold text-text-main">{t.title}</h2>
+            <div className="flex items-center gap-3 md:gap-4 mt-1">
               <button 
                 onClick={() => setActiveTab('global')}
-                className={`text-[10px] uppercase tracking-widest transition-all ${activeTab === 'global' ? 'text-primary-light font-black underline underline-offset-4' : 'text-text-muted hover:text-white'}`}
+                className={`text-[9px] md:text-[10px] uppercase tracking-widest transition-all ${activeTab === 'global' ? 'text-primary-light font-black underline underline-offset-4' : 'text-text-muted hover:text-white'}`}
               >
                 {t.global || 'Global'}
               </button>
               <button 
                 onClick={() => setActiveTab('friends')}
-                className={`text-[10px] uppercase tracking-widest transition-all relative ${activeTab === 'friends' ? 'text-primary-light font-black underline underline-offset-4' : 'text-text-muted hover:text-white'}`}
+                className={`text-[9px] md:text-[10px] uppercase tracking-widest transition-all relative ${activeTab === 'friends' ? 'text-primary-light font-black underline underline-offset-4' : 'text-text-muted hover:text-white'}`}
               >
                 {t.friends || 'Friends'}
-                {friendRequests.length > 0 && <span className="absolute -top-2 -right-2 w-2 h-2 bg-pink-500 rounded-full animate-ping" />}
+                {friendRequests.length > 0 && <span className="absolute -top-1.5 -right-1.5 w-1.5 h-1.5 bg-pink-500 rounded-full animate-ping" />}
               </button>
               <button 
                 onClick={() => setActiveTab('messages')}
-                className={`text-[10px] uppercase tracking-widest transition-all ${activeTab === 'messages' ? 'text-primary-light font-black underline underline-offset-4' : 'text-text-muted hover:text-white'}`}
+                className={`text-[9px] md:text-[10px] uppercase tracking-widest transition-all ${activeTab === 'messages' ? 'text-primary-light font-black underline underline-offset-4' : 'text-text-muted hover:text-white'}`}
               >
                 {t.messages || 'Messages'}
               </button>
             </div>
           </div>
         </div>
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-2 px-3 py-1.5 bg-white/5 rounded-full border border-white/10">
-            <span className="text-[10px] font-bold text-text-muted uppercase tracking-tighter">{t.anonymous}</span>
+        <div className="flex items-center justify-between sm:justify-end gap-3 md:gap-4">
+          <div className="flex items-center gap-2 px-2.5 py-1 md:py-1.5 bg-white/5 rounded-full border border-white/10">
+            <span className="text-[9px] md:text-[10px] font-bold text-text-muted uppercase tracking-tighter">{t.anonymous}</span>
             <button 
               onClick={() => setIsAnonymous(!isAnonymous)}
-              className={`w-8 h-4 rounded-full relative transition-all duration-300 ${isAnonymous ? 'bg-primary' : 'bg-white/10'}`}
+              className={`w-7 h-3.5 md:w-8 md:h-4 rounded-full relative transition-all duration-300 ${isAnonymous ? 'bg-primary' : 'bg-white/10'}`}
             >
-              <div className={`absolute top-0.5 w-3 h-3 bg-white rounded-full transition-all duration-300 ${isAnonymous ? 'left-4.5' : 'left-0.5'}`} />
+              <div className={`absolute top-0.5 w-2.5 h-2.5 md:w-3 md:h-3 bg-white rounded-full transition-all duration-300 ${isAnonymous ? 'left-3.5 md:left-4.5' : 'left-0.5'}`} />
             </button>
           </div>
           {!user && (
-            <div className="flex items-center gap-2 text-pink-400 bg-pink-500/10 px-3 py-1 rounded-full text-xs font-bold">
-              <LockClosedIcon className="w-4 h-4" />
+            <div className="flex items-center gap-1.5 text-pink-400 bg-pink-500/10 px-2.5 py-1 rounded-full text-[10px] md:text-xs font-bold whitespace-nowrap">
+              <LockClosedIcon className="w-3 h-3 md:w-4 md:h-4" />
               {t.loginReq}
             </div>
           )}
@@ -542,9 +543,9 @@ export default function CommunityChat({ language = 'English' }: { language?: str
       </div>
 
       {/* Messages Area */}
-      <div className="flex-1 overflow-y-auto p-6 space-y-4 scrollbar-hide relative">
+      <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-4 scrollbar-hide relative">
         {activeTab === 'global' && (
-          <>
+          <div className="flex flex-col gap-4">
             {messages.map((msg) => {
               const request = friendRequests.find(r => r.sender_id === msg.user_id || r.receiver_id === msg.user_id);
               const isFriend = friends.find(f => f.user_id === msg.user_id || f.friend_id === msg.user_id);
@@ -560,50 +561,54 @@ export default function CommunityChat({ language = 'English' }: { language?: str
                 />
               );
             })}
-          </>
+          </div>
         )}
 
         {activeTab === 'friends' && (
-          <FriendsSection 
-            user={user} 
-            requests={friendRequests} 
-            friends={friends} 
-            onRefresh={() => { fetchFriendRequests(); fetchFriends(); }}
-            onOpenChat={() => { setActiveTab('messages'); /* logic to select friend */ }}
-          />
+          <div className="max-w-2xl mx-auto">
+            <FriendsSection 
+              user={user} 
+              requests={friendRequests} 
+              friends={friends} 
+              onRefresh={() => { fetchFriendRequests(); fetchFriends(); }}
+              onOpenChat={() => { setActiveTab('messages'); /* logic to select friend */ }}
+            />
+          </div>
         )}
 
         {activeTab === 'messages' && (
-          <PrivateMessagesSection 
-            user={user} 
-            friends={friends}
-          />
+          <div className="h-full">
+            <PrivateMessagesSection 
+              user={user} 
+              friends={friends}
+            />
+          </div>
         )}
         
         <div ref={messagesEndRef} />
       </div>
 
       {/* Input Area */}
-      <div className="p-4 border-t border-white/10 bg-black/30 backdrop-blur-md">
+      <div className="p-3 md:p-4 border-t border-white/10 bg-black/30 backdrop-blur-md">
         {!user ? (
-          <div className="text-center py-4 text-text-muted text-sm font-bold bg-white/5 rounded-xl border border-white/10">
+          <div className="text-center py-3 md:py-4 text-text-muted text-[11px] md:text-sm font-bold bg-white/5 rounded-xl border border-white/10">
             {t.loginReq} ❤️
           </div>
         ) : isBanned ? (
-          <div className="flex items-center justify-center gap-3 py-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-500 text-sm font-black uppercase tracking-widest animate-pulse">
+          <div className="flex items-center justify-center gap-3 py-3 md:py-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-500 text-xs md:text-sm font-black uppercase tracking-widest animate-pulse">
             <NoSymbolIcon className="w-5 h-5" />
             Banned
           </div>
         ) : (
-          <div className="max-w-4xl mx-auto space-y-3">
+          <div className="max-w-4xl mx-auto space-y-2 md:space-y-3">
             {isAnonymous && (
-              <div className="text-[10px] text-pink-400/80 font-bold uppercase tracking-widest text-center animate-pulse">
+              <div className="text-[9px] md:text-[10px] text-pink-400/80 font-bold uppercase tracking-widest text-center animate-pulse">
                 🕶 {t.anonHint}
               </div>
             )}
-            <div className="flex items-center gap-3">
-              <label className="p-3 bg-white/5 hover:bg-white/10 rounded-xl cursor-pointer transition-all border border-white/10 group">
-                <PhotoIcon className="w-6 h-6 text-text-muted group-hover:text-primary-light" />
+            <div className="flex items-center gap-2 md:gap-3">
+              <label className="p-2.5 md:p-3 bg-white/5 hover:bg-white/10 rounded-xl cursor-pointer transition-all border border-white/10 group flex-shrink-0">
+                <PhotoIcon className="w-5 h-5 md:w-6 md:h-6 text-text-muted group-hover:text-primary-light" />
                 <input type="file" accept="image/*" className="hidden" onChange={handleImageUpload} disabled={isUploading} />
               </label>
 
@@ -612,26 +617,26 @@ export default function CommunityChat({ language = 'English' }: { language?: str
                 onMouseUp={stopRecording}
                 onTouchStart={startRecording}
                 onTouchEnd={stopRecording}
-                className={`p-3 rounded-xl transition-all border group ${isRecording ? 'bg-red-500/20 border-red-500/50 text-red-500 animate-pulse' : 'bg-white/5 border-white/10 text-text-muted hover:bg-white/10 hover:text-primary-light'}`}
+                className={`p-2.5 md:p-3 rounded-xl transition-all border group flex-shrink-0 ${isRecording ? 'bg-red-500/20 border-red-500/50 text-red-500 animate-pulse' : 'bg-white/5 border-white/10 text-text-muted hover:bg-white/10 hover:text-primary-light'}`}
               >
-                {isRecording ? <StopIcon className="w-6 h-6" /> : <MicrophoneIcon className="w-6 h-6" />}
+                {isRecording ? <StopIcon className="w-5 h-5 md:w-6 md:h-6" /> : <MicrophoneIcon className="w-5 h-5 md:w-6 md:h-6" />}
               </button>
 
-              <div className="flex-1 relative">
+              <div className="flex-1 relative flex items-center">
                 <input
                   type="text"
                   value={inputText}
                   onChange={(e) => setInputText(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && handleSendText()}
                   placeholder={t.placeholder}
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-3.5 outline-none focus:border-primary/50 transition-all text-text-main placeholder:text-text-muted"
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 md:px-6 py-2.5 md:py-3.5 outline-none focus:border-primary/50 transition-all text-sm md:text-base text-text-main placeholder:text-text-muted pr-11 md:pr-14"
                 />
                 <button
                   onClick={handleSendText}
                   disabled={!inputText.trim() || isUploading}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 p-2 bg-primary/20 hover:bg-primary/30 text-primary-light rounded-lg disabled:opacity-30 transition-all"
+                  className="absolute right-1.5 md:right-2 p-1.5 md:p-2 bg-primary/20 hover:bg-primary/30 text-primary-light rounded-lg disabled:opacity-30 transition-all"
                 >
-                  <PaperAirplaneIcon className="w-5 h-5" />
+                  <PaperAirplaneIcon className="w-4 h-4 md:w-5 md:h-5" />
                 </button>
               </div>
             </div>
@@ -640,8 +645,11 @@ export default function CommunityChat({ language = 'English' }: { language?: str
       </div>
 
       {isUploading && (
-        <div className="absolute top-0 left-0 w-full h-1 bg-primary-light animate-pulse" />
+        <div className="absolute top-0 left-0 w-full h-0.5 md:h-1 bg-primary-light animate-pulse" />
       )}
+    </div>
+  );
+}
     </div>
   );
 }

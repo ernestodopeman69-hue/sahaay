@@ -130,26 +130,26 @@ export default function CareCompanion({ onNavigate, language = 'English' }: { on
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
-              className="glass-panel p-8 flex flex-col md:flex-row items-center gap-8 bg-gradient-to-br from-primary/10 to-transparent"
+              className="glass-panel p-6 md:p-8 flex flex-col sm:flex-row items-center gap-6 md:gap-8 bg-gradient-to-br from-primary/10 to-transparent"
             >
-              <div className="w-16 h-16 rounded-2xl bg-primary/20 flex items-center justify-center text-primary-light shadow-lg">
-                <currentTask.icon className="w-8 h-8" />
+              <div className="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-primary/20 flex items-center justify-center text-primary-light shadow-lg shrink-0">
+                <currentTask.icon className="w-7 h-7 md:w-8 md:h-8" />
               </div>
 
-              <div className="flex-1 text-center md:text-left">
-                <h3 className="text-xl font-bold text-text-main mb-1">{currentTask.title}</h3>
-                <p className="text-text-muted mb-4">{currentTask.description}</p>
-                <div className="flex items-center justify-center md:justify-start gap-4">
+              <div className="flex-1 text-center sm:text-left">
+                <h3 className="text-lg md:text-xl font-bold text-text-main mb-1">{currentTask.title}</h3>
+                <p className="text-sm md:text-base text-text-muted mb-6 sm:mb-4">{currentTask.description}</p>
+                <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 md:gap-4">
                   <button
                     onClick={() => handleDone(currentTask.id)}
-                    className="flex items-center gap-2 px-6 py-2.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/30 transition-all font-bold text-sm"
+                    className="flex items-center gap-2 px-5 md:px-6 py-2.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/30 transition-all font-bold text-xs md:text-sm"
                   >
                     <CheckCircleIcon className="w-5 h-5" />
                     Done
                   </button>
                   <button
                     onClick={() => handleSkip(currentTask.id)}
-                    className="flex items-center gap-2 px-6 py-2.5 rounded-full bg-white/5 text-text-muted border border-white/10 hover:bg-white/10 transition-all font-bold text-sm"
+                    className="flex items-center gap-2 px-5 md:px-6 py-2.5 rounded-full bg-white/5 text-text-muted border border-white/10 hover:bg-white/10 transition-all font-bold text-xs md:text-sm"
                   >
                     <XCircleIcon className="w-5 h-5" />
                     Skip
@@ -161,14 +161,14 @@ export default function CareCompanion({ onNavigate, language = 'English' }: { on
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="glass-panel p-12 text-center"
+              className="glass-panel p-8 md:p-12 text-center"
             >
-              <SparklesIcon className="w-12 h-12 text-primary-light mx-auto mb-4" />
-              <h3 className="text-xl font-bold text-text-main mb-2">You've completed all tasks!</h3>
-              <p className="text-text-muted">Take some time to rest. You deserve it.</p>
+              <SparklesIcon className="w-10 h-10 md:w-12 md:h-12 text-primary-light mx-auto mb-4" />
+              <h3 className="text-lg md:text-xl font-bold text-text-main mb-2">You've completed all tasks!</h3>
+              <p className="text-sm md:text-base text-text-muted">Take some time to rest. You deserve it.</p>
               <button
                 onClick={() => setTasks(tasks.map(t => ({ ...t, done: false, skipped: false })))}
-                className="mt-6 text-primary-light hover:underline text-sm font-bold"
+                className="mt-6 text-primary-light hover:underline text-xs md:text-sm font-bold"
               >
                 Restart Daily Guider
               </button>

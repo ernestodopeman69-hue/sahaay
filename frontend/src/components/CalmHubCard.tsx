@@ -38,15 +38,15 @@ export default function CalmHubCard({ title, desc, previewUrl, poster, onClick, 
         <div className="absolute inset-0 bg-gradient-to-t from-dark-900 via-dark-900/20 to-transparent" />
       </div>
 
-      <div className="relative z-10 h-full p-8 flex flex-col justify-end">
-        <h3 className="text-2xl font-bold text-white mb-2">{title}</h3>
-        <p className="text-gray-400 text-sm leading-relaxed mb-6 max-w-[240px] opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">
+      <div className="relative z-10 h-full p-6 md:p-8 flex flex-col justify-end">
+        <h3 className="text-xl md:text-2xl font-bold text-white mb-2">{title}</h3>
+        <p className="text-gray-400 text-xs md:text-sm leading-relaxed mb-4 md:mb-6 max-w-[240px] opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500 line-clamp-2">
           {desc}
         </p>
         
-        <div className="flex items-center gap-3 text-primary-light font-bold text-xs uppercase tracking-widest">
-          <div className="w-10 h-10 rounded-full bg-primary/20 backdrop-blur-md flex items-center justify-center border border-primary/30">
-            <PlayIcon className="w-4 h-4" />
+        <div className="flex items-center gap-3 text-primary-light font-bold text-[10px] md:text-xs uppercase tracking-widest">
+          <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-primary/20 backdrop-blur-md flex items-center justify-center border border-primary/30">
+            <PlayIcon className="w-3 md:w-4 h-3 md:h-4" />
           </div>
           Explore Sanctuary
         </div>

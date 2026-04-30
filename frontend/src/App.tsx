@@ -62,17 +62,28 @@ export default function App() {
     return () => subscription.unsubscribe();
   }, []);
 
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
   if (!session) {
     return <Login />;
   }
 
   return (
-    <div className="min-h-screen flex">
-      {/* Sidebar - Fixed Left */}
-      <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} language={language} />
+    <div className="min-h-screen flex bg-background text-text-main overflow-x-hidden">
+      {/* Sidebar - Responsive */}
+      <Sidebar 
+        activeTab={activeTab} 
+        setActiveTab={(t) => {
+          setActiveTab(t);
+          setIsSidebarOpen(false); // Close on mobile navigation
+        }} 
+        language={language}
+        isOpen={isSidebarOpen}
+        setIsOpen={setIsSidebarOpen}
+      />
 
       {/* Main Container */}
-      <div className="flex-1 flex flex-col ml-20 min-h-screen">
+      <div className={`flex-1 flex flex-col min-h-screen transition-all duration-300 ${isSidebarOpen ? 'ml-0 md:ml-20' : 'ml-0 md:ml-20'}`}>
         {/* Global Floating Companion */}
         <FloatingCompanion onNavigate={setActiveTab} />
 
@@ -81,10 +92,11 @@ export default function App() {
           language={language} 
           setLanguage={setLanguage} 
           userEmail={session.user.email || 'Guest User'} 
+          toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
         />
 
         {/* Dynamic Content Area */}
-        <main className="flex-1 p-8 overflow-y-auto">
+        <main className="flex-1 p-4 md:p-8 overflow-y-auto">
           <div className="max-w-6xl mx-auto h-full">
             {activeTab === 'home' && <Dashboard onNavigate={setActiveTab} language={language} />}
 

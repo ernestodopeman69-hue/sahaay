@@ -157,7 +157,7 @@ export default function FloatingCompanion({ onNavigate }: { onNavigate: (tab: st
   };
 
   return (
-    <div className="fixed bottom-5 right-5 z-[100] flex flex-col items-end gap-3 pointer-events-none">
+    <div className="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-[100] flex flex-col items-end gap-3 pointer-events-none">
       
       {/* Chat-Style Floating Notifications Area */}
       <div className="flex flex-col items-end gap-3 mb-2">
@@ -168,38 +168,38 @@ export default function FloatingCompanion({ onNavigate }: { onNavigate: (tab: st
               initial={{ opacity: 0, y: 30, x: 20, scale: 0.9 }}
               animate={{ opacity: 1, y: 0, x: 0, scale: 1 }}
               exit={{ opacity: 0, x: 50, transition: { duration: 0.2 } }}
-              className="pointer-events-auto w-[320px] bg-dark-900/90 backdrop-blur-xl border border-white/10 rounded-2xl p-4 shadow-2xl relative group"
+              className="pointer-events-auto w-[280px] md:w-[320px] bg-dark-900/90 backdrop-blur-xl border border-white/10 rounded-2xl p-3 md:p-4 shadow-2xl relative group"
             >
               {/* Chat Bubble Tail */}
               <div className="absolute -bottom-2 right-6 w-4 h-4 bg-dark-900/90 border-r border-b border-white/10 transform rotate-45" />
               
-              <div className="flex items-start gap-3">
+              <div className="flex items-start gap-2 md:gap-3">
                 {/* Logo/Avatar */}
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-pink-500 flex items-center justify-center flex-shrink-0 shadow-lg border border-white/10">
-                  <SparklesIcon className="w-5 h-5 text-white" />
+                <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-gradient-to-br from-primary to-pink-500 flex items-center justify-center flex-shrink-0 shadow-lg border border-white/10">
+                  <SparklesIcon className="w-4 h-4 md:w-5 md:h-5 text-white" />
                 </div>
                 
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between mb-1">
-                    <span className="text-xs font-black text-primary-light uppercase tracking-widest">Sahay Companion</span>
-                    <span className="text-[10px] text-text-muted">Just now</span>
+                    <span className="text-[10px] md:text-xs font-black text-primary-light uppercase tracking-widest truncate mr-2">Sahaay</span>
+                    <span className="text-[9px] md:text-[10px] text-text-muted whitespace-nowrap">Just now</span>
                   </div>
                   
                   {typeof n.content === 'string' ? (
-                    <p className="text-sm text-text-main font-medium leading-relaxed">{n.content}</p>
+                    <p className="text-xs md:text-sm text-text-main font-medium leading-relaxed">{n.content}</p>
                   ) : (
                     <div className="space-y-3">
-                      <p className="text-sm text-text-main font-bold leading-tight">{n.content.description}</p>
+                      <p className="text-xs md:text-sm text-text-main font-bold leading-tight">{n.content.description}</p>
                       <div className="flex gap-2">
                         <button 
                           onClick={() => handleDone(n.content.id)}
-                          className="flex-1 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 text-[10px] font-black py-2 rounded-lg border border-emerald-500/20 transition-all uppercase"
+                          className="flex-1 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 text-[9px] md:text-[10px] font-black py-2 rounded-lg border border-emerald-500/20 transition-all uppercase"
                         >
                           Done
                         </button>
                         <button 
                           onClick={() => handleSkip(n.content.id)}
-                          className="flex-1 bg-white/5 hover:bg-white/10 text-text-muted text-[10px] font-black py-2 rounded-lg border border-white/10 transition-all uppercase"
+                          className="flex-1 bg-white/5 hover:bg-white/10 text-text-muted text-[9px] md:text-[10px] font-black py-2 rounded-lg border border-white/10 transition-all uppercase"
                         >
                           Skip
                         </button>
@@ -228,7 +228,7 @@ export default function FloatingCompanion({ onNavigate }: { onNavigate: (tab: st
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="absolute bottom-20 right-0 w-80 bg-dark-900/95 backdrop-blur-2xl p-6 border border-white/10 rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.8)] overflow-hidden"
+              className="absolute bottom-20 right-0 w-72 md:w-80 bg-dark-900/95 backdrop-blur-2xl p-5 md:p-6 border border-white/10 rounded-[2rem] md:rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.8)] overflow-hidden"
             >
               <div className="absolute top-0 right-0 p-6">
                 <button onClick={() => setIsOpen(false)} className="text-text-muted hover:text-text-main">
